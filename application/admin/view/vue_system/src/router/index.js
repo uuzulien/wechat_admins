@@ -112,7 +112,7 @@ var router = new Router({
                 },
                 {
                     path: '/wechat_menu_list',
-                    component: resolve => require(['../components/wechat/wechat_menu_list.vue'], resolve)    // 自定义菜单
+                    component: resolve => require(['../components/wechat/wechat_menu_list.vue'], resolve)    // 自定义菜单1
                 },
                 {
                     path: '/fans_list',

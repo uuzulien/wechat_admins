@@ -30,7 +30,7 @@
                         <el-dropdown-item command="loginout" @click="logout()">退出</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
-            </div>        
+            </div>
         </el-row>
     </div>
 </template>

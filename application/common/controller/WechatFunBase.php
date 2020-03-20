@@ -278,8 +278,9 @@ class WechatFunBase extends Base
         $data = $menu_data;
         $result = Curl::send($request_url, json_encode($data,JSON_UNESCAPED_UNICODE), 'post');
         $arrayData = json_decode($result,true);
+//        halt($arrayData);
         if($arrayData['errcode'] != 0){
-            Wlog::write('wechatFunLog',"create_wechat_public_num_menu接口的错误：相关的appid:{$authorizer_appid}>>>>>>>{$arrayData['errmsg']}>>>>>>>{$arrayData['errcode']}");
+//            Wlog::write('wechatFunLog',"create_wechat_public_num_menu接口的错误：相关的appid:{$authorizer_appid}>>>>>>>{$arrayData['errmsg']}>>>>>>>{$arrayData['errcode']}");
             return false;
         }
         return true;

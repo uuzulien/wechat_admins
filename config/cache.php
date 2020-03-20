@@ -22,4 +22,15 @@ return [
     'prefix' => '',
     // 缓存有效期 0表示永久缓存
     'expire' => 0,
+//    'prefix'     => 'module',
+//    'type'       => 'redis',
+//    'auto_start' => true,
+//    // redis主机
+//    'host'       => 'r-wz9v5dc9yvfyxxvtyhpd.redis.rds.aliyuncs.com',
+//    // redis端口
+//    'port'       => 6379,
+//    // 密码
+//    'password'   => 'Niubi8888',
+//    'timeout'=> 0,
+//    'select'     => 0,
 ];

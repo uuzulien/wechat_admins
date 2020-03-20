@@ -4,21 +4,24 @@ namespace app\index\controller;
 use app\common\constant\CacheKeyConstant;
 use app\common\controller\Base;
 use app\common\controller\WechatFunBase;
+use app\common\model\ServiceMessageListModel;
+use app\common\model\WechatEmpowerInfoModel;
 use app\common\tool\Wlog;
 use think\facade\Log;
+use think\facade\Cache;
 use think\Request;
 
 class Index extends Base
 {
     public function index(Request $request)
     {
-
         $redis   = self::get_redis();
         if($request->get('action') == 'selectSentResult'){
             //客服消息的key
             $serviceMsgKey = CacheKeyConstant::SERVICE_MSG.'*';
             //获取客服消息所有存储的信息
             $serviceContent = $redis->keys($serviceMsgKey);
+            halt($serviceContent);
             foreach ($serviceContent as $serviceval) {
                 $serviceredisval = $redis->get($serviceval);
                 $serviceredisvalArr = explode('_',$serviceredisval);
@@ -39,4 +42,39 @@ class Index extends Base
     {
         return 'hello,' . $name;
     }
+
+    public function getitem()
+    {
+        $where = [];
+        $paginate = 15;
+        $order = 'create_time DESC';
+        //获取公众号id
+        $wechat_model = new WechatEmpowerInfoModel();
+        $wechat_info = $wechat_model->where($where)->field('auth_appid')->select()->toArray();
+        $appid = '';
+        if($wechat_info){
+            foreach ($wechat_info AS $wechet_key => $wechat_val){
+                $appid .= $wechat_val['auth_appid'] . ',';
+            }
+            $appid = substr($appid,0,strlen($appid)-1);
+        }
+        //当前公众号的
+        $wechat_where[] = ['appid','in',$appid];
+        if(!empty($starttime) && !empty($endtime)){
+            $lists = ServiceMessageListModel::where($wechat_where)->whereTime('sent_time', 'between', [$starttime, $endtime])->order($order)->append(['wechat_nick_name','handle_user_name','site_type_name','task_type_name'])->paginate($paginate);
+        }else{
+            $lists = ServiceMessageListModel::where($wechat_where)->order($order)->append(['wechat_nick_name','handle_user_name','site_type_name','task_type_name'])->paginate($paginate);
+        }
+        $res = [];
+        $res["list"] = $lists->toArray();
+        foreach ($res['list']['data'] as $key => $value)
+        {
+            if($value['sent_status'] === 1){
+                ServiceMessageListModel::destroy($value['id']);
+            }
+        }
+        return success_result('删除成功');
+
+    }
+    
 }

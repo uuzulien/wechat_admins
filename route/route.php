@@ -14,8 +14,9 @@ Route::get('think', function () {
 });
 
 Route::get('hello/:name', 'index/hello');
+Route::get('getkey', 'index/index');
 
-Route::get('Show$','Show/To_show');
+Route::get('Show$','index/getitem');
 
 return [
     '[admin]' => [
@@ -119,6 +120,8 @@ return [
         'wechat_menu_list'=>'admin/WechatMenuController/getmenu',//获取微信公众号再用的菜单
         'wechat_menu_add'=>'admin/WechatMenuController/add',//更新当前公众号的菜单
         'set_service_img_url'=>'admin/WechatMenuController/set_service_img_url',//更新当前公众号的菜单
+        'show_wechat_menu_list'=>'admin/ShowWechatMenuList/index',//展示菜單
+        'wechat_menu_send'=>'admin/ShowWechatMenuList/send',//自定义公众号样式
         /*********结束**********/
 
 

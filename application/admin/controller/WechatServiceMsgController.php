@@ -9,7 +9,6 @@ use app\common\model\ServiceMessageListModel;
 use app\common\model\WechatEmpowerInfoModel;
 use app\common\model\WechatUserInfoModel;
 use think\Request;
-use app\common\controller\Base;
 
 
 /**
@@ -28,8 +27,6 @@ class WechatServiceMsgController extends AdminBase
      */
     public function index(Request $request)
     {
-//        $redis = Base::get_redis();
-//        print_r($redis);die;
         $where = [];
         $wechat_where=[];
         $order = 'create_time DESC';
