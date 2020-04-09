@@ -43,6 +43,7 @@ class GetActiveFansAndSave extends Command
             $active_time = $active_time_sql_str.= "END";
             $openids = rtrim($openids_sql_str,',');
             $updateResult = Db::execute("update wechat_user_info set active_time={$active_time} where openid in ({$openids})");
+            print_r($openids);
         }
     }
 }
